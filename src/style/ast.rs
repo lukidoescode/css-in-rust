@@ -194,6 +194,10 @@ width: 200px;
 }"#,
                     ),
                 }),
+                ScopeContent::Scope(Scope {
+                    condition: String::from("@media only screen and (min-width: 626px)"),
+                    stylesets: vec![],
+                }),
             ],
         };
         assert_eq!(
@@ -211,6 +215,8 @@ width: 100px;
 to {
 width: 200px;
 }
+}
+@media only screen and (min-width: 626px) {
 }"#
         );
     }
