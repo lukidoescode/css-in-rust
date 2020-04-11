@@ -31,7 +31,7 @@ impl ToCss for Scope {
             .map(|styleset| match styleset {
                 ScopeContent::Block(block) => block.to_css(class_name.clone()),
                 ScopeContent::Rule(rule) => rule.to_css(class_name.clone()),
-                ScopeContent::Scope(scope) => scope.to_css(class_name.clone()),
+                // ScopeContent::Scope(scope) => scope.to_css(class_name.clone()),
             })
             .fold(String::new(), |acc, css_part| {
                 format!("{}{}\n", acc, css_part)
@@ -48,7 +48,8 @@ impl ToCss for Scope {
 pub(crate) enum ScopeContent {
     Block(Block),
     Rule(Rule),
-    Scope(Scope),
+    // e.g. media rules nested in support rules and vice versa
+    // Scope(Scope),
 }
 
 /// A block is a set of css properties that apply to elements that
@@ -194,10 +195,6 @@ width: 200px;
 }"#,
                     ),
                 }),
-                ScopeContent::Scope(Scope {
-                    condition: String::from("@media only screen and (min-width: 626px)"),
-                    stylesets: vec![],
-                }),
             ],
         };
         assert_eq!(
@@ -215,8 +212,6 @@ width: 100px;
 to {
 width: 200px;
 }
-}
-@media only screen and (min-width: 626px) {
 }"#
         );
     }
