@@ -50,7 +50,7 @@ pub(crate) fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
 
 pub(crate) fn view(model: &Model) -> impl View<Msg> {
     button![
-        model.style,
+        model.style.clone(),
         simple_ev(Ev::Click, Msg::Increment),
         format!("Hello, World × {}", model.val)
     ]
