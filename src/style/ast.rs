@@ -84,7 +84,7 @@ impl ToCss for Block {
         if condition.contains('&') {
             format!(
                 "{} {{{}\n}}",
-                condition.replace("&", format!(".{}", class_name).as_str()),
+                condition.replace('&', format!(".{}", class_name).as_str()),
                 style_property_css
             )
         } else {

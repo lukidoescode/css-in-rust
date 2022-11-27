@@ -12,7 +12,7 @@ use yew::prelude::Classes;
 impl From<Style> for Classes {
     fn from(style: Style) -> Self {
         let mut classes = Self::new();
-        classes.push(style.get_class_name().to_string());
+        classes.push(style.get_class_name());
         classes
     }
 }
