@@ -6,6 +6,9 @@ Cargo.lock
 # VSCode
 *.code-workspace
 
+# CLion
+.idea
+
 # MacOS
 ## General
 .DS_Store

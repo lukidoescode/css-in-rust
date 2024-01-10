@@ -29,17 +29,9 @@ extern "C" {
 
 /// The style registry is just a global struct that makes sure no style gets lost.
 /// Every style automatically registers with the style registry.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug, Default)]
 struct StyleRegistry {
     styles: HashMap<String, Style>,
-}
-
-impl Default for StyleRegistry {
-    fn default() -> Self {
-        Self {
-            styles: HashMap::new(),
-        }
-    }
 }
 
 unsafe impl Send for StyleRegistry {}
@@ -57,6 +49,7 @@ pub struct Style {
 }
 
 #[cfg(not(target_arch = "wasm32"))]
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub struct Style {
     /// The designated class name of this style
@@ -170,6 +163,7 @@ impl Style {
                 small_rng
                     .sample_iter(Alphanumeric)
                     .take(30)
+                    .map(|number| number.to_string())
                     .collect::<String>()
             ),
             // TODO log out an error
@@ -180,7 +174,7 @@ impl Style {
             Ok(guard) => guard,
             Err(poisoned) => poisoned.into_inner(),
         };
-        (*style_registry)
+        style_registry
             .styles
             .insert(new_style.class_name.clone(), new_style.clone());
         Ok(new_style)
